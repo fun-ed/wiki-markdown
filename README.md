@@ -166,23 +166,27 @@ node test/converter.test.js
 
 #### Firefox
 
-**Option A — Permanent install (Developer Edition / Nightly / ESR):**
+**Option A — Permanent install (requires [Firefox Developer Edition](https://www.mozilla.org/firefox/developer/) or [Nightly](https://www.mozilla.org/firefox/channel/desktop/#nightly)):**
+
+> The `.xpi` from this project is **unsigned**. Standard Firefox (Release/Beta) blocks unsigned extensions entirely — there is no workaround. You must use Developer Edition or Nightly.
+
 ```bash
 npm run package:firefox
 ```
-1. Go to `about:config` → set `xpinstall.signatures.required` to `false`
-2. Go to `about:addons` → gear icon → "Install Add-on From File..."
-3. Select `dist/firefox/wiki_markdown-{version}.xpi`
+1. Open **Firefox Developer Edition** or **Nightly**
+2. Go to `about:config` → search `xpinstall.signatures.required` → set to `false`
+3. Go to `about:addons` → gear icon → "Install Add-on From File..."
+4. Select `dist/firefox/wiki_markdown-{version}.xpi`
 
-> Standard Firefox (Release/Beta) requires signed `.xpi`. Use Developer Edition, Nightly, or ESR for unsigned installs.
+The extension persists across restarts.
 
-**Option B — Temporary (any Firefox edition):**
+**Option B — Temporary (any Firefox edition, including Release):**
 ```bash
 npm run build
 ```
 1. Go to `about:debugging#/runtime/this-firefox`
 2. Click "Load Temporary Add-on" → select `extension/manifest.json`
-3. Extension is removed when Firefox restarts
+3. Extension works until Firefox restarts
 
 #### Chrome
 ```bash
