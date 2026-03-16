@@ -60,7 +60,7 @@ Cross-browser extension (Firefox + Chrome) for bidirectional wiki markup ↔ Mar
 
 ## Architecture
 
-Built with SOLID principles, Island Architecture, and a custom AST pipeline.
+Modular design with isolated islands, composable plugins, and a custom AST pipeline.
 
 ### Design Patterns
 | Pattern | Where | Purpose |
@@ -159,6 +159,19 @@ node test/converter.test.js
 
 **Chrome:**
 - `chrome://extensions` → Developer mode → Load unpacked → `dist/chrome/`
+
+## Contributing
+
+1. Fork & clone
+2. `npm install && npm run build`
+3. Load extension locally (see Install above)
+4. Make changes in `src/` — follow existing patterns:
+   - One responsibility per file; add new plugins/strategies instead of modifying existing ones
+   - Islands don't import each other — communicate only via `message-bus.js`
+   - Each Turndown plugin is a standalone file with `filter` + `replacement` only
+5. `npm run build` and test manually on a Confluence/Jira page
+6. `node test/converter.test.js` to run unit tests
+7. Submit a PR
 
 ## License
 
