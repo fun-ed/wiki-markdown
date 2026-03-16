@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki ↔ Markdown</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <div class="logo">{#}</div>
+        <h1>Wiki ↔ Markdown</h1>
+      </div>
+      <div class="header-right">
+        <span class="page-info" id="pageInfo"></span>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">&#9790;</button>
+        <button class="theme-toggle" id="btnSettings" title="Settings">&#9881;</button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="export">Copy as MD</button>
+      <button class="tab" data-tab="convert">MD ↔ Jira</button>
+      <button class="tab" data-tab="import">Fill Jira</button>
+      <button class="tab" data-tab="attachments">Attachments</button>
+    </nav>
+
+    <!-- Tab 1: Export -->
+    <section class="panel active" id="tab-export">
+      <div class="options">
+        <label><input type="checkbox" id="optImages" checked> Base64 images</label>
+        <label><input type="checkbox" id="optMetadata" checked> Metadata</label>
+        <label><input type="checkbox" id="optSelected"> Selection only</label>
+      </div>
+      <button class="btn primary" id="btnCopyMd">Copy Page as Markdown</button>
+      <div class="output-area">
+        <textarea id="outputMd" readonly placeholder="Markdown output appears here..."></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="btnCopyOutput" disabled>Copy to Clipboard</button>
+        <button class="btn secondary" id="btnDownload" disabled>Download .md</button>
+        <button class="btn secondary" id="btnExportImages" disabled>Export Images</button>
+        <button class="btn secondary" id="btnExportHtml">Export HTML</button>
+      </div>
+    </section>
+
+    <!-- Tab 2: Convert -->
+    <section class="panel" id="tab-convert">
+      <div class="convert-row">
+        <div class="convert-col">
+          <label>Markdown</label>
+          <textarea id="convertMd" placeholder="Paste Markdown here..."></textarea>
+        </div>
+        <div class="convert-arrows">
+          <button class="btn icon" id="btnMdToJira" title="MD → Jira">&#8594;</button>
+          <button class="btn icon" id="btnJiraToMd" title="Jira → MD">&#8592;</button>
+        </div>
+        <div class="convert-col">
+          <label>Jira Markup</label>
+          <textarea id="convertJira" placeholder="Paste Jira markup here..."></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="btnCopyConvertMd">Copy MD</button>
+        <button class="btn secondary" id="btnCopyConvertJira">Copy Jira</button>
+      </div>
+    </section>
+
+    <!-- Tab 3: Import -->
+    <section class="panel" id="tab-import">
+      <div class="hint">Paste or upload Markdown to auto-fill into the current Jira/Confluence editor.</div>
+      <div class="import-input">
+        <textarea id="importMd" placeholder="Paste Markdown content here..."></textarea>
+        <div class="file-upload">
+          <label class="btn secondary" for="fileInput">Upload .md</label>
+          <input type="file" id="fileInput" accept=".md,.markdown,.txt" hidden>
+          <span id="fileName"></span>
+        </div>
+      </div>
+      <label class="preview-toggle">
+        <input type="checkbox" id="optPreview"> Preview Jira markup
+      </label>
+      <div id="previewArea" class="output-area" hidden>
+        <textarea id="previewJira" readonly placeholder="Converted Jira markup preview..."></textarea>
+      </div>
+      <button class="btn primary" id="btnInsert">Insert into Jira Page</button>
+      <div id="insertStatus" class="status" hidden></div>
+    </section>
+
+    <!-- Tab 4: Attachments -->
+    <section class="panel" id="tab-attachments">
+      <div class="hint">Scan page for images and attachments. Select items to download into an organized folder.</div>
+      <button class="btn primary" id="btnScanAttachments">Scan Attachments</button>
+      <div id="attachmentList" class="attachment-list" hidden>
+        <div class="attachment-controls">
+          <label><input type="checkbox" id="attachSelectAll" checked> Select all</label>
+          <span class="attachment-count" id="attachCount"></span>
+        </div>
+        <div class="attachment-items" id="attachItems"></div>
+      </div>
+      <button class="btn primary" id="btnDownloadAttachments" disabled>Download Selected</button>
+      <div id="downloadStatus" class="status" hidden></div>
+    </section>
+
+    <footer>
+      <span class="status-text" id="statusText"></span>
+      <span class="footer-right">v1.0.0</span>
+    </footer>
+  </div>
+
+  <script src="../lib/browser-polyfill.js"></script>
+  <script src="../lib/converter.bundle.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

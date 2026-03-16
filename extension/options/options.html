@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki ↔ Markdown — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">{#}</div>
+      <h1>Wiki ↔ Markdown</h1>
+      <span class="version">v1.0.0</span>
+    </header>
+
+    <section class="card">
+      <h2>Image Handling</h2>
+      <p class="desc">Controls how images are embedded when copying pages as Markdown.</p>
+
+      <div class="setting">
+        <label class="toggle-row">
+          <input type="checkbox" id="optEmbedBase64" checked>
+          <span class="toggle-label">
+            <strong>Embed images as base64</strong>
+            <span class="toggle-desc">Images are encoded inline as data URIs. Produces a single self-contained .md file, but file size is larger.</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="setting sub" id="localPathInfo">
+        <div class="info-box">
+          When base64 is <strong>off</strong>, clicking <em>Download .md</em> will save images to a local <code>images/</code> folder and reference them as relative paths (e.g. <code>![](images/img01.png)</code>).
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>HTML Export</h2>
+      <p class="desc">Controls the behavior of the Export HTML feature.</p>
+
+      <div class="setting">
+        <label class="toggle-row">
+          <input type="checkbox" id="optHtmlInlineImages" checked>
+          <span class="toggle-label">
+            <strong>Inline images in HTML export</strong>
+            <span class="toggle-desc">Embed images as base64 in the exported HTML file for a fully self-contained page.</span>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Metadata</h2>
+      <p class="desc">YAML front matter added to the top of exported Markdown.</p>
+
+      <div class="setting">
+        <label class="toggle-row">
+          <input type="checkbox" id="optIncludeMetadata" checked>
+          <span class="toggle-label">
+            <strong>Include metadata</strong>
+            <span class="toggle-desc">Adds title, URL, export date, labels, and other page info as YAML front matter.</span>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <div class="save-bar">
+      <span class="save-status" id="saveStatus"></span>
+      <button class="btn primary" id="btnReset">Reset Defaults</button>
+    </div>
+  </div>
+
+  <script src="../lib/browser-polyfill.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

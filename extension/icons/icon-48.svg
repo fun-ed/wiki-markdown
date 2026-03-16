@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0052cc"/>
+      <stop offset="100%" stop-color="#6554c0"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="14" y1="24" x2="34" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#b3d4ff"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="48" height="48" rx="11" fill="url(#bg)"/>
+  <!-- Left bracket { representing markup -->
+  <path d="M12 15c0-1.5 1-2.5 2.5-2.5h2v3h-1.5c-.5 0-.8.3-.8.8v5.2c0 1-0.8 1.8-1.7 2 .9.2 1.7 1 1.7 2v5.2c0 .5.3.8.8.8h1.5v3h-2c-1.5 0-2.5-1-2.5-2.5v-5c0-.8-.5-1.2-1.2-1.2v-3.6c.7 0 1.2-.4 1.2-1.2z" fill="white" opacity="0.9"/>
+  <!-- Right bracket } representing markup -->
+  <path d="M36 33c0 1.5-1 2.5-2.5 2.5h-2v-3h1.5c.5 0 .8-.3.8-.8v-5.2c0-1 .8-1.8 1.7-2-.9-.2-1.7-1-1.7-2v-5.2c0-.5-.3-.8-.8-.8h-1.5v-3h2c1.5 0 2.5 1 2.5 2.5v5c0 .8.5 1.2 1.2 1.2v3.6c-.7 0-1.2.4-1.2 1.2z" fill="white" opacity="0.9"/>
+  <!-- Bidirectional arrows in center -->
+  <path d="M19 20l4-4 4 4" stroke="url(#arrow)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M21 28l4 4 4-4" stroke="url(#arrow)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Center hash # for markdown -->
+  <rect x="22" y="19" width="1.8" height="10" rx="0.9" fill="white" opacity="0.7" transform="rotate(-12 23 24)"/>
+  <rect x="25" y="19" width="1.8" height="10" rx="0.9" fill="white" opacity="0.7" transform="rotate(-12 26 24)"/>
+  <rect x="20.5" y="22" width="8" height="1.5" rx="0.75" fill="white" opacity="0.5"/>
+  <rect x="21" y="25" width="8" height="1.5" rx="0.75" fill="white" opacity="0.5"/>
+</svg>
