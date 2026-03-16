@@ -151,14 +151,33 @@ npm run start:firefox
 node test/converter.test.js
 ```
 
-### Install
+### Install (local, unsigned)
 
-**Firefox:**
-- `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → `extension/manifest.json`
-- Or `.xpi` in Firefox Developer Edition (`xpinstall.signatures.required = false`)
+**Firefox (no signing required):**
+1. Use **Firefox Developer Edition**, **Nightly**, or **ESR**
+2. Go to `about:config` → set `xpinstall.signatures.required` to `false`
+3. Go to `about:addons` → gear icon → "Install Add-on From File..." → select `dist/firefox/wiki_markdown-1.0.0.xpi`
+
+> Standard Firefox (Release/Beta) requires signed add-ons. Use Developer Edition or Nightly for unsigned installs.
+
+**Firefox (temporary, any edition):**
+- `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → select `extension/manifest.json`
+- Extension is removed when Firefox restarts
 
 **Chrome:**
-- `chrome://extensions` → Developer mode → Load unpacked → `dist/chrome/`
+- `chrome://extensions` → Developer mode → Load unpacked → select `dist/chrome/`
+
+### Sign for self-distribution (optional)
+
+To distribute a signed `.xpi` that works on standard Firefox:
+
+1. Get API credentials at [addons.mozilla.org/developers/addon/api/key](https://addons.mozilla.org/developers/addon/api/key/)
+2. Sign with `web-ext`:
+```bash
+npx web-ext sign -s extension --channel=unlisted \
+  --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
+```
+3. Signed `.xpi` appears in `web-ext-artifacts/`
 
 ## Contributing
 
