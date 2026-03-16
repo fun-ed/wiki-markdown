@@ -528,6 +528,17 @@ footer {
   transition: color 0.15s;
 }
 
+.footer-link {
+  font-size: 10px;
+  color: var(--text-subtle);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-link:hover {
+  color: var(--primary);
+}
+
 .footer-right {
   font-size: 10px;
   color: var(--text-subtle);

@@ -1,14 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Wiki ↔ Markdown",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bidirectional converter: copy wiki pages as Markdown (with base64 images), or paste Markdown as wiki markup into issue trackers and knowledge bases.",
   "browser_specific_settings": {
     "gecko": {
       "id": "jira-markdown@zoonderkins",
       "strict_min_version": "142.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
@@ -64,7 +66,9 @@
     }
   },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "type": "module"
   },
   "options_ui": {
@@ -77,7 +81,9 @@
         "*://*.atlassian.net/*",
         "*://*.jira.com/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ]
