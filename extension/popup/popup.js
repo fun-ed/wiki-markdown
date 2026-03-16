@@ -28,6 +28,7 @@ async function init() {
   setupAttachmentsTab();
   await applySettingsToUI();
   await detectPage();
+  document.getElementById('appVersion').textContent = 'v' + browser.runtime.getManifest().version;
 }
 
 /** Sync popup checkboxes with persisted settings. */

@@ -128,21 +128,32 @@ extension/
 ### Setup
 ```bash
 npm install
-npm run build
 ```
 
-### Run
+### Build
+
+Version is managed in `package.json` — all other files (manifest, UI, zip filenames) sync automatically on build.
+
 ```bash
-npm run start:firefox
+npm run build              # bundle only (for dev)
+npm run package:firefox    # build + package → dist/firefox/wiki_markdown-{version}.xpi
+npm run package:chrome     # build + package → dist/wiki_markdown-{version}-chrome.zip
+npm run package            # both
+```
+
+### Bump version
+```bash
+npm version 1.1.0 --no-git-tag-version
+npm run package   # everything updates automatically
 ```
 
 ### Commands
 | Command | Description |
 |---------|-------------|
-| `npm run build` | Bundle converter + islands + polyfill |
-| `npm run start:firefox` | Launch Firefox with extension |
+| `npm run build` | Bundle converter + islands + polyfill, sync manifest version |
+| `npm run start:firefox` | Launch Firefox with extension loaded |
 | `npm run lint` | Validate with web-ext |
-| `npm run package:firefox` | Build `.zip` + `.xpi` |
+| `npm run package:firefox` | Build `.xpi` |
 | `npm run package:chrome` | Build Chrome `.zip` |
 | `npm run package` | Build both |
 
@@ -151,28 +162,41 @@ npm run start:firefox
 node test/converter.test.js
 ```
 
-### Install (local, unsigned)
+### Install locally
 
-**Firefox (no signing required):**
-1. Use **Firefox Developer Edition**, **Nightly**, or **ESR**
-2. Go to `about:config` → set `xpinstall.signatures.required` to `false`
-3. Go to `about:addons` → gear icon → "Install Add-on From File..." → select `dist/firefox/wiki_markdown-1.0.0.xpi`
+#### Firefox
 
-> Standard Firefox (Release/Beta) requires signed add-ons. Use Developer Edition or Nightly for unsigned installs.
+**Option A — Permanent install (Developer Edition / Nightly / ESR):**
+```bash
+npm run package:firefox
+```
+1. Go to `about:config` → set `xpinstall.signatures.required` to `false`
+2. Go to `about:addons` → gear icon → "Install Add-on From File..."
+3. Select `dist/firefox/wiki_markdown-{version}.xpi`
 
-**Firefox (temporary, any edition):**
-- `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → select `extension/manifest.json`
-- Extension is removed when Firefox restarts
+> Standard Firefox (Release/Beta) requires signed `.xpi`. Use Developer Edition, Nightly, or ESR for unsigned installs.
 
-**Chrome:**
-- `chrome://extensions` → Developer mode → Load unpacked → select `dist/chrome/`
+**Option B — Temporary (any Firefox edition):**
+```bash
+npm run build
+```
+1. Go to `about:debugging#/runtime/this-firefox`
+2. Click "Load Temporary Add-on" → select `extension/manifest.json`
+3. Extension is removed when Firefox restarts
 
-### Sign for self-distribution (optional)
+#### Chrome
+```bash
+npm run package:chrome
+```
+1. Go to `chrome://extensions` → enable "Developer mode"
+2. Click "Load unpacked" → select `dist/chrome/`
 
-To distribute a signed `.xpi` that works on standard Firefox:
+### Sign for distribution (optional)
+
+To distribute a signed `.xpi` installable on standard Firefox:
 
 1. Get API credentials at [addons.mozilla.org/developers/addon/api/key](https://addons.mozilla.org/developers/addon/api/key/)
-2. Sign with `web-ext`:
+2. Sign:
 ```bash
 npx web-ext sign -s extension --channel=unlisted \
   --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET

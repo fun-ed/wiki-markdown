@@ -46,7 +46,8 @@ function copyDir(src, dest) {
 copyDir(EXT_DIR, CHROME_DIST);
 
 // Create zip using execFileSync (safe, no shell injection)
-const zipFile = path.join(ROOT, 'dist', 'wiki_markdown-1.0.0-chrome.zip');
+const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf-8'));
+const zipFile = path.join(ROOT, 'dist', `wiki_markdown-${pkg.version}-chrome.zip`);
 try { fs.unlinkSync(zipFile); } catch {}
 execFileSync('zip', ['-r', zipFile, '.'], { cwd: CHROME_DIST, stdio: 'inherit' });
-console.log('✅ Chrome extension packaged: dist/wiki_markdown-1.0.0-chrome.zip');
+console.log(`✅ Chrome extension packaged: dist/wiki_markdown-${pkg.version}-chrome.zip`);

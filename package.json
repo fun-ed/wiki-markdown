@@ -7,7 +7,7 @@
     "build": "node build.js",
     "lint": "npx web-ext lint -s extension",
     "start:firefox": "npx web-ext run -s extension --keep-profile-changes",
-    "package:firefox": "npm run build && npx web-ext build -s extension -a dist/firefox --overwrite-dest && cp dist/firefox/wiki_markdown-1.0.0.zip dist/firefox/wiki_markdown-1.0.0.xpi",
+    "package:firefox": "npm run build && npx web-ext build -s extension -a dist/firefox --overwrite-dest && V=$(node -p \"require('./package.json').version\") && cp \"dist/firefox/wiki_markdown-${V}.zip\" \"dist/firefox/wiki_markdown-${V}.xpi\"",
     "package:chrome": "npm run build && node scripts/package-chrome.js",
     "package": "npm run package:firefox && npm run package:chrome"
   },

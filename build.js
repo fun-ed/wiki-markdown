@@ -4,8 +4,13 @@ const path = require('path');
 
 const ROOT = __dirname;
 const EXT_DIR = path.join(ROOT, 'extension');
+const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf-8'));
+const VERSION = pkg.version;
 
 async function build() {
+  // 0. Sync version from package.json → manifest.json
+  syncManifestVersion();
+
   // 1. Bundle converter library (for popup — IIFE with global name)
   await esbuild.build({
     entryPoints: [path.join(ROOT, 'src/converter/index.js')],
@@ -47,6 +52,16 @@ async function build() {
   // 4. Generate Chrome manifest
   generateChromeManifest();
   console.log('✅ Generated dist/chrome/manifest.json');
+}
+
+function syncManifestVersion() {
+  const manifestPath = path.join(EXT_DIR, 'manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+  if (manifest.version !== VERSION) {
+    manifest.version = VERSION;
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+    console.log(`✅ Synced manifest.json version → ${VERSION}`);
+  }
 }
 
 function generateChromeManifest() {

@@ -15,6 +15,7 @@ async function init() {
   applyToUI(settings);
   setupListeners();
   updateLocalPathVisibility(settings.embedBase64);
+  document.getElementById('appVersion').textContent = 'v' + browser.runtime.getManifest().version;
 }
 
 async function loadSettings() {
