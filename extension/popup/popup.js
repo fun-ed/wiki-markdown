@@ -188,7 +188,10 @@ function setupExportTab() {
       btnCopyOutput.disabled = false;
       btnDownload.disabled = false;
       if (lastImageUrls.length > 0) btnExportImages.disabled = false;
-      setStatus(`Converted! ${md.length} chars, ${imageBase64Map.size} images embedded.`, 'success');
+      const imgStatus = options.includeImages
+        ? `${imageBase64Map.size} images embedded`
+        : `${lastImageUrls.length} images found (use Export/Download to save)`;
+      setStatus(`Converted! ${md.length} chars, ${imgStatus}.`, 'success');
     } catch (e) {
       setStatus(`Error: ${e.message}`, 'error');
       console.error('[Wiki↔MD]', e);
@@ -358,9 +361,13 @@ function setupExportTab() {
 
       // Download accompanying local media (videos, attachments) referenced by the HTML
       let mediaCount = 0;
-      if (result.localMedia && result.localMedia.length > 0) {
-        setStatus(`Downloading ${result.localMedia.length} media files...`);
-        const mediaItems = result.localMedia.map((m) => ({
+      const allMedia = [
+        ...(result.localMedia || []),
+        ...(result.imageFiles || []),
+      ];
+      if (allMedia.length > 0) {
+        setStatus(`Downloading ${allMedia.length} media files...`);
+        const mediaItems = allMedia.map((m) => ({
           url: m.url,
           filename: m.filename,
           type: m.type,
@@ -374,8 +381,11 @@ function setupExportTab() {
       }
 
       const sizeMB = (result.size / 1024 / 1024).toFixed(1);
+      const imgInfo = result.imageFiles?.length > 0
+        ? `, ${result.imageFiles.length} images saved`
+        : '';
       const extra = mediaCount > 0 ? `, ${mediaCount} media files` : '';
-      setStatus(`Saved: ${filePath} (${sizeMB}MB, ${result.imageCount} images${extra})`, 'success');
+      setStatus(`Saved: ${filePath} (${sizeMB}MB, ${result.imageCount} images${imgInfo}${extra})`, 'success');
     } catch (e) {
       setStatus(`Error: ${e.message}`, 'error');
     } finally {

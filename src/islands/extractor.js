@@ -66,7 +66,8 @@ function extractContent(options = {}) {
   }
 
   const metadata = includeMetadata ? extractMetadata() : {};
-  const imageUrls = includeImages ? collectImageUrls(html) : [];
+  // Always collect image URLs — the flag only controls base64 embedding in popup
+  const imageUrls = collectImageUrls(html);
 
   return { html, metadata, imageUrls };
 }

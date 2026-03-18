@@ -22,10 +22,14 @@ async function exportSingleHtml(options = {}) {
     // 2. Collect and inline stylesheets
     const inlinedStyles = await collectStyles();
 
-    // 3. Collect and inline images
+    // 3. Handle images: inline as base64 or localize to relative paths
     let imageCount = 0;
+    let imageFiles = [];
     if (inlineImages) {
       imageCount = await inlineImagesInClone(clone);
+    } else {
+      imageFiles = localizeImagesInClone(clone);
+      imageCount = imageFiles.length;
     }
 
     // 4. Replace videos with HTML5 <video> tags pointing to local relative paths
@@ -74,6 +78,7 @@ async function exportSingleHtml(options = {}) {
       imageCount,
       size: htmlContent.length,
       localMedia, // files that need to be downloaded alongside the HTML
+      imageFiles, // images to download when not inlined (empty when inlineImages=true)
     };
   } catch (e) {
     return { success: false, error: e.message };
@@ -154,6 +159,58 @@ async function inlineImagesInClone(clone) {
   }
 
   return count;
+}
+
+/**
+ * Rewrite <img src> in clone to local relative paths (images/img01.png).
+ * Returns array of { url, localPath, filename } for popup to download.
+ * Mirrors inlineImagesInClone's URL resolution but without fetching.
+ */
+function localizeImagesInClone(clone) {
+  const imgs = clone.querySelectorAll('img');
+  const imageFiles = [];
+  const urlSet = new Set();
+  const imgUrlMap = new Map();
+
+  for (const img of imgs) {
+    let bestUrl = getHighestResSrc(img);
+    if ((!bestUrl || bestUrl.startsWith('data:')) && img.getAttribute('data-src')) {
+      bestUrl = img.getAttribute('data-src');
+    }
+    if (bestUrl && !bestUrl.startsWith('data:')) {
+      urlSet.add(bestUrl);
+      imgUrlMap.set(img, bestUrl);
+    }
+  }
+
+  if (urlSet.size === 0) return imageFiles;
+
+  // Build URL→localPath mapping
+  const urlToLocal = new Map();
+  let idx = 0;
+  for (const url of urlSet) {
+    idx++;
+    const imgName = `img${String(idx).padStart(2, '0')}.png`;
+    const localPath = `images/${imgName}`;
+    urlToLocal.set(url, { localPath, filename: imgName });
+    imageFiles.push({
+      url: decodeHtmlEntities(url),
+      localPath,
+      filename: imgName,
+      type: 'image',
+    });
+  }
+
+  // Rewrite img src to local paths
+  for (const img of imgs) {
+    const bestUrl = imgUrlMap.get(img);
+    if (bestUrl && urlToLocal.has(bestUrl)) {
+      img.setAttribute('src', urlToLocal.get(bestUrl).localPath);
+      img.removeAttribute('srcset');
+    }
+  }
+
+  return imageFiles;
 }
 
 /**

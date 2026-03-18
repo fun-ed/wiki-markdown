@@ -1,6 +1,6 @@
 {
   "name": "jira-markdown",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cross-browser extension (Firefox + Chrome): bidirectional wiki ↔ Markdown converter with base64 image embedding",
   "main": "build.js",
   "scripts": {
