@@ -3,3 +3,8 @@ dist/
 *.xpi
 .DS_Store
 test/.converter-test-bundle.cjs
+
+# Share repo skills with Claude Code (overrides global .claude/ ignore)
+!.claude/
+.claude/*
+!.claude/skills
