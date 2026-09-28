@@ -117,11 +117,11 @@ extension/
 
 | Library | Version | Purpose |
 |---------|---------|---------|
-| [Turndown](https://github.com/mixmark-io/turndown) | 7.2.2 | HTML → Markdown |
-| [@truto/turndown-plugin-gfm](https://github.com/trutohq/turndown-plugin-gfm) | 1.0.2 | GFM tables |
+| [Turndown](https://github.com/mixmark-io/turndown) | 7.2.4 | HTML → Markdown |
+| [@truto/turndown-plugin-gfm](https://github.com/trutohq/turndown-plugin-gfm) | 1.0.5 | GFM tables |
 | [jira2md](https://github.com/metysj/jira2md) | 3.0.1 | Jira → Markdown |
 | [webextension-polyfill](https://github.com/nicedoc/webextension-polyfill) | 0.12.0 | Chrome API compat |
-| [esbuild](https://esbuild.github.io/) | 0.27.4 | Bundling |
+| [esbuild](https://esbuild.github.io/) | 0.28.2 | Bundling |
 
 ## Development
 
