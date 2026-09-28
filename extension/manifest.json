@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Wiki ↔ Markdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Bidirectional converter: copy wiki pages as Markdown (with base64 images), or paste Markdown as wiki markup into issue trackers and knowledge bases.",
   "browser_specific_settings": {
     "gecko": {
