@@ -1,6 +1,6 @@
 {
   "name": "jira-markdown",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Cross-browser extension (Firefox + Chrome): bidirectional wiki ↔ Markdown converter with base64 image embedding",
   "main": "build.js",
   "scripts": {
@@ -21,13 +21,13 @@
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
-    "@truto/turndown-plugin-gfm": "^1.0.5",
+    "@truto/turndown-plugin-gfm": "^1.0.7",
     "esbuild": "^0.28.2",
     "jira2md": "^3.0.1",
     "sharp": "^0.35.5",
-    "turndown": "^7.2.2",
+    "turndown": "^7.2.5",
     "turndown-plugin-confluence-to-gfm": "^0.5.0",
-    "web-ext": "^10.7.0",
+    "web-ext": "^10.8.0",
     "webextension-polyfill": "^0.12.0"
   }
 }
